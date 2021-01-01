@@ -53,7 +53,7 @@ namespace rent_a_car
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Araba}/{action=Index}/{id?}");
+                    pattern: "{controller=Arabas}/{action=Index}/{id?}");
             });
         }
     }
