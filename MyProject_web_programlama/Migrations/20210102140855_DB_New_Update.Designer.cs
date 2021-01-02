@@ -10,8 +10,8 @@ using MyProject_web_programlama.Data;
 namespace MyProject_web_programlama.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210102091037_new")]
-    partial class @new
+    [Migration("20210102140855_DB_New_Update")]
+    partial class DB_New_Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -221,30 +221,6 @@ namespace MyProject_web_programlama.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.Adres", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Il")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Ilce")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Satir1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Satir2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Adres");
-                });
-
             modelBuilder.Entity("MyProject_web_programlama.Models.Araba", b =>
                 {
                     b.Property<int>("Id")
@@ -255,48 +231,12 @@ namespace MyProject_web_programlama.Migrations
                     b.Property<string>("Ad")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ArabaFirId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ServisId")
+                    b.Property<int>("Model")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArabaFirId");
-
-                    b.HasIndex("ServisId");
-
-                    b.ToTable("Arabas");
-                });
-
-            modelBuilder.Entity("MyProject_web_programlama.Models.ArabaFirma", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Ad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AdresId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirmaSahibi")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefon")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdresId");
-
-                    b.ToTable("ArabaFirmas");
+                    b.ToTable("Araba");
                 });
 
             modelBuilder.Entity("MyProject_web_programlama.Models.ArabaKira", b =>
@@ -306,28 +246,25 @@ namespace MyProject_web_programlama.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArabaId")
+                    b.Property<int?>("ArabaId")
                         .HasColumnType("int");
 
                     b.Property<int>("KiraFiyati")
                         .HasColumnType("int");
 
-                    b.Property<int>("KiraciId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonelId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Sure")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserID")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArabaId");
 
-                    b.HasIndex("KiraciId");
+                    b.HasIndex("UserID");
 
-                    b.ToTable("ArabaKiras");
+                    b.ToTable("ArabaKira");
                 });
 
             modelBuilder.Entity("MyProject_web_programlama.Models.Fotograf", b =>
@@ -337,17 +274,17 @@ namespace MyProject_web_programlama.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArabaId")
+                    b.Property<int?>("ArabaId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Fotograf1")
+                    b.Property<string>("fotograf")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArabaId");
 
-                    b.ToTable("Fotografs");
+                    b.ToTable("Fotograf");
                 });
 
             modelBuilder.Entity("MyProject_web_programlama.Models.IlanKoy", b =>
@@ -357,13 +294,13 @@ namespace MyProject_web_programlama.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArabaId")
+                    b.Property<int?>("AdminID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ArabaId")
                         .HasColumnType("int");
 
                     b.Property<int>("Fiyat")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PersonelId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Tarih")
@@ -371,38 +308,22 @@ namespace MyProject_web_programlama.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdminID");
+
                     b.HasIndex("ArabaId");
 
-                    b.ToTable("IlanKoys");
+                    b.ToTable("IlanKoy");
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.Kiraci", b =>
+            modelBuilder.Entity("MyProject_web_programlama.Models.Ofis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Ad")
+                    b.Property<string>("OfisAd")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soyad")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Yas")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Kiracis");
-                });
-
-            modelBuilder.Entity("MyProject_web_programlama.Models.Ofi", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.HasKey("Id");
 
@@ -416,56 +337,89 @@ namespace MyProject_web_programlama.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AdminID")
+                        .HasColumnType("int");
+
                     b.Property<string>("OzellikTipi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ozelliks");
+                    b.HasIndex("AdminID");
+
+                    b.ToTable("Ozellik");
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.OzellikEkle", b =>
+            modelBuilder.Entity("MyProject_web_programlama.Models.Person", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ArabaId")
+                    b.Property<int?>("ArabaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OzellikId")
-                        .HasColumnType("int");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnName("FirstName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("ID");
 
                     b.HasIndex("ArabaId");
 
-                    b.HasIndex("OzellikId");
+                    b.ToTable("Person");
 
-                    b.ToTable("OzellikEkles");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Person");
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.ServisFirma", b =>
+            modelBuilder.Entity("MyProject_web_programlama.Models.Admin", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.HasBaseType("MyProject_web_programlama.Models.Person");
 
-                    b.Property<string>("Ad")
+                    b.Property<int?>("OfisId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("OfisId");
+
+                    b.HasDiscriminator().HasValue("Admin");
+                });
+
+            modelBuilder.Entity("MyProject_web_programlama.Models.User", b =>
+                {
+                    b.HasBaseType("MyProject_web_programlama.Models.Person");
+
+                    b.Property<int>("Cinsiyet")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Maas")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Medeni")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Meslek")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Servis")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ServisFirmas");
+                    b.HasDiscriminator().HasValue("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -519,76 +473,54 @@ namespace MyProject_web_programlama.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.Araba", b =>
-                {
-                    b.HasOne("MyProject_web_programlama.Models.ArabaFirma", "ArabaFir")
-                        .WithMany("Arabas")
-                        .HasForeignKey("ArabaFirId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MyProject_web_programlama.Models.ServisFirma", "Servis")
-                        .WithMany("Arabas")
-                        .HasForeignKey("ServisId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyProject_web_programlama.Models.ArabaFirma", b =>
-                {
-                    b.HasOne("MyProject_web_programlama.Models.Adres", "Adres")
-                        .WithMany("ArabaFirmas")
-                        .HasForeignKey("AdresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("MyProject_web_programlama.Models.ArabaKira", b =>
                 {
                     b.HasOne("MyProject_web_programlama.Models.Araba", "Araba")
                         .WithMany("ArabaKiras")
-                        .HasForeignKey("ArabaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArabaId");
 
-                    b.HasOne("MyProject_web_programlama.Models.Kiraci", "Kiraci")
-                        .WithMany("ArabaKiras")
-                        .HasForeignKey("KiraciId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("MyProject_web_programlama.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID");
                 });
 
             modelBuilder.Entity("MyProject_web_programlama.Models.Fotograf", b =>
                 {
                     b.HasOne("MyProject_web_programlama.Models.Araba", "Araba")
                         .WithMany("Fotografs")
-                        .HasForeignKey("ArabaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArabaId");
                 });
 
             modelBuilder.Entity("MyProject_web_programlama.Models.IlanKoy", b =>
                 {
+                    b.HasOne("MyProject_web_programlama.Models.Admin", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminID");
+
                     b.HasOne("MyProject_web_programlama.Models.Araba", "Araba")
                         .WithMany("IlanKoys")
-                        .HasForeignKey("ArabaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ArabaId");
                 });
 
-            modelBuilder.Entity("MyProject_web_programlama.Models.OzellikEkle", b =>
+            modelBuilder.Entity("MyProject_web_programlama.Models.Ozellik", b =>
+                {
+                    b.HasOne("MyProject_web_programlama.Models.Admin", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminID");
+                });
+
+            modelBuilder.Entity("MyProject_web_programlama.Models.Person", b =>
                 {
                     b.HasOne("MyProject_web_programlama.Models.Araba", "Araba")
-                        .WithMany("OzellikEkles")
-                        .HasForeignKey("ArabaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("ArabaId");
+                });
 
-                    b.HasOne("MyProject_web_programlama.Models.Ozellik", "Ozellik")
-                        .WithMany("OzellikEkles")
-                        .HasForeignKey("OzellikId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            modelBuilder.Entity("MyProject_web_programlama.Models.Admin", b =>
+                {
+                    b.HasOne("MyProject_web_programlama.Models.Ofis", "Ofis")
+                        .WithMany()
+                        .HasForeignKey("OfisId");
                 });
 #pragma warning restore 612, 618
         }

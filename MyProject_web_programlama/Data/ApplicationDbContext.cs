@@ -13,18 +13,14 @@ namespace MyProject_web_programlama.Data
             : base(options)
         {
         }
-        public DbSet<Adres> Adres { get; set; }
-        public DbSet<Araba> Arabas { get; set; }
-        public DbSet<ArabaFirma> ArabaFirmas { get; set; }
-        public DbSet<ArabaKira> ArabaKiras { get; set; }
-        public DbSet<Fotograf> Fotografs { get; set; }
-        public DbSet<IlanKoy> IlanKoys { get; set; }
-        public DbSet<Kiraci> Kiracis { get; set; }
-        public DbSet<Ofi> Ofis { get; set; }
-        public DbSet<Ozellik> Ozelliks { get; set; }
-        public DbSet<OzellikEkle> OzellikEkles { get; set; }
-        public DbSet<ServisFirma> ServisFirmas { get; set; }
-        public DbSet<MyProject_web_programlama.Models.Person> Person { get; set; }
-        public DbSet<MyProject_web_programlama.Models.User> User { get; set; }
+        public DbSet<Araba> Araba { get; set; }
+        public DbSet<ArabaKira> ArabaKira { get; set; }
+        public DbSet<Fotograf> Fotograf { get; set; }
+        public DbSet<IlanKoy> IlanKoy { get; set; }
+        public DbSet<Ofis> Ofis { get; set; }
+        public DbSet<Ozellik> Ozellik { get; set; }
+        public DbSet<Person> Person { get; set; }
+        public DbSet<Admin> Admin { get; set; }
+        public DbSet<User> User { get; set; }
     }
 }

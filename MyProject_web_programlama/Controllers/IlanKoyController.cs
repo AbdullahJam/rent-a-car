@@ -10,22 +10,22 @@ using MyProject_web_programlama.Models;
 
 namespace MyProject_web_programlama.Controllers
 {
-    public class PeopleController : Controller
+    public class IlanKoyController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PeopleController(ApplicationDbContext context)
+        public IlanKoyController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: People
+        // GET: IlanKoy
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Person.ToListAsync());
+            return View(await _context.IlanKoy.ToListAsync());
         }
 
-        // GET: People/Details/5
+        // GET: IlanKoy/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace MyProject_web_programlama.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (person == null)
+            var ilanKoy = await _context.IlanKoy
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ilanKoy == null)
             {
                 return NotFound();
             }
 
-            return View(person);
+            return View(ilanKoy);
         }
 
-        // GET: People/Create
+        // GET: IlanKoy/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: People/Create
+        // POST: IlanKoy/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,LastName,Email1,Email2,FirstMidName")] Person person)
+        public async Task<IActionResult> Create([Bind("Id,Tarih,Fiyat")] IlanKoy ilanKoy)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(person);
+                _context.Add(ilanKoy);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(person);
+            return View(ilanKoy);
         }
 
-        // GET: People/Edit/5
+        // GET: IlanKoy/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace MyProject_web_programlama.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person.FindAsync(id);
-            if (person == null)
+            var ilanKoy = await _context.IlanKoy.FindAsync(id);
+            if (ilanKoy == null)
             {
                 return NotFound();
             }
-            return View(person);
+            return View(ilanKoy);
         }
 
-        // POST: People/Edit/5
+        // POST: IlanKoy/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,LastName,Email1,Email2,FirstMidName")] Person person)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Tarih,Fiyat")] IlanKoy ilanKoy)
         {
-            if (id != person.ID)
+            if (id != ilanKoy.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MyProject_web_programlama.Controllers
             {
                 try
                 {
-                    _context.Update(person);
+                    _context.Update(ilanKoy);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PersonExists(person.ID))
+                    if (!IlanKoyExists(ilanKoy.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace MyProject_web_programlama.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(person);
+            return View(ilanKoy);
         }
 
-        // GET: People/Delete/5
+        // GET: IlanKoy/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace MyProject_web_programlama.Controllers
                 return NotFound();
             }
 
-            var person = await _context.Person
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (person == null)
+            var ilanKoy = await _context.IlanKoy
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (ilanKoy == null)
             {
                 return NotFound();
             }
 
-            return View(person);
+            return View(ilanKoy);
         }
 
-        // POST: People/Delete/5
+        // POST: IlanKoy/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var person = await _context.Person.FindAsync(id);
-            _context.Person.Remove(person);
+            var ilanKoy = await _context.IlanKoy.FindAsync(id);
+            _context.IlanKoy.Remove(ilanKoy);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PersonExists(int id)
+        private bool IlanKoyExists(int id)
         {
-            return _context.Person.Any(e => e.ID == id);
+            return _context.IlanKoy.Any(e => e.Id == id);
         }
     }
 }

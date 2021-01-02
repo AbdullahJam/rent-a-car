@@ -3,24 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyProject_web_programlama.Migrations
 {
-    public partial class @new : Migration
+    public partial class DB_New_Update : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Adres",
+                name: "Araba",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Ilce = table.Column<string>(nullable: true),
-                    Il = table.Column<string>(nullable: true),
-                    Satir1 = table.Column<string>(nullable: true),
-                    Satir2 = table.Column<string>(nullable: true)
+                    Ad = table.Column<string>(nullable: true),
+                    Model = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Adres", x => x.Id);
+                    table.PrimaryKey("PK_Araba", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,26 +61,12 @@ namespace MyProject_web_programlama.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Kiracis",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(nullable: true),
-                    Soyad = table.Column<string>(nullable: true),
-                    Yas = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Kiracis", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ofis",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OfisAd = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,53 +74,23 @@ namespace MyProject_web_programlama.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Ozelliks",
+                name: "Fotograf",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OzellikTipi = table.Column<string>(nullable: false)
+                    fotograf = table.Column<string>(nullable: true),
+                    ArabaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ozelliks", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ServisFirmas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(nullable: true),
-                    Servis = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ServisFirmas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ArabaFirmas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ad = table.Column<string>(nullable: true),
-                    FirmaSahibi = table.Column<string>(nullable: true),
-                    Telefon = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    AdresId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ArabaFirmas", x => x.Id);
+                    table.PrimaryKey("PK_Fotograf", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArabaFirmas_Adres_AdresId",
-                        column: x => x.AdresId,
-                        principalTable: "Adres",
+                        name: "FK_Fotograf_Araba_ArabaId",
+                        column: x => x.ArabaId,
+                        principalTable: "Araba",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -246,154 +200,125 @@ namespace MyProject_web_programlama.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Arabas",
+                name: "Person",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArabaFirId = table.Column<int>(nullable: false),
-                    ServisId = table.Column<int>(nullable: false),
-                    Ad = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: false),
+                    LastName = table.Column<string>(maxLength: 50, nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    ArabaId = table.Column<int>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false),
+                    OfisId = table.Column<int>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    Meslek = table.Column<int>(nullable: true),
+                    Maas = table.Column<double>(nullable: true),
+                    Medeni = table.Column<int>(nullable: true),
+                    Cinsiyet = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Arabas", x => x.Id);
+                    table.PrimaryKey("PK_Person", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Arabas_ArabaFirmas_ArabaFirId",
-                        column: x => x.ArabaFirId,
-                        principalTable: "ArabaFirmas",
+                        name: "FK_Person_Ofis_OfisId",
+                        column: x => x.OfisId,
+                        principalTable: "Ofis",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Arabas_ServisFirmas_ServisId",
-                        column: x => x.ServisId,
-                        principalTable: "ServisFirmas",
+                        name: "FK_Person_Araba_ArabaId",
+                        column: x => x.ArabaId,
+                        principalTable: "Araba",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ArabaKiras",
+                name: "ArabaKira",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PersonelId = table.Column<int>(nullable: false),
-                    ArabaId = table.Column<int>(nullable: false),
-                    KiraciId = table.Column<int>(nullable: false),
                     KiraFiyati = table.Column<int>(nullable: false),
-                    Sure = table.Column<string>(nullable: true)
+                    Sure = table.Column<string>(nullable: true),
+                    ArabaId = table.Column<int>(nullable: true),
+                    UserID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArabaKiras", x => x.Id);
+                    table.PrimaryKey("PK_ArabaKira", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ArabaKiras_Arabas_ArabaId",
+                        name: "FK_ArabaKira_Araba_ArabaId",
                         column: x => x.ArabaId,
-                        principalTable: "Arabas",
+                        principalTable: "Araba",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ArabaKiras_Kiracis_KiraciId",
-                        column: x => x.KiraciId,
-                        principalTable: "Kiracis",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_ArabaKira_Person_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Person",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fotografs",
+                name: "IlanKoy",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArabaId = table.Column<int>(nullable: false),
-                    Fotograf1 = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Fotografs", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Fotografs_Arabas_ArabaId",
-                        column: x => x.ArabaId,
-                        principalTable: "Arabas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "IlanKoys",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ArabaId = table.Column<int>(nullable: false),
-                    PersonelId = table.Column<int>(nullable: false),
                     Tarih = table.Column<DateTime>(nullable: false),
-                    Fiyat = table.Column<int>(nullable: false)
+                    Fiyat = table.Column<int>(nullable: false),
+                    AdminID = table.Column<int>(nullable: true),
+                    ArabaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IlanKoys", x => x.Id);
+                    table.PrimaryKey("PK_IlanKoy", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_IlanKoys_Arabas_ArabaId",
+                        name: "FK_IlanKoy_Person_AdminID",
+                        column: x => x.AdminID,
+                        principalTable: "Person",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_IlanKoy_Araba_ArabaId",
                         column: x => x.ArabaId,
-                        principalTable: "Arabas",
+                        principalTable: "Araba",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OzellikEkles",
+                name: "Ozellik",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ArabaId = table.Column<int>(nullable: false),
-                    OzellikId = table.Column<int>(nullable: false),
-                    Tarih = table.Column<DateTime>(nullable: false)
+                    OzellikTipi = table.Column<string>(nullable: true),
+                    AdminID = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OzellikEkles", x => x.Id);
+                    table.PrimaryKey("PK_Ozellik", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OzellikEkles_Arabas_ArabaId",
-                        column: x => x.ArabaId,
-                        principalTable: "Arabas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OzellikEkles_Ozelliks_OzellikId",
-                        column: x => x.OzellikId,
-                        principalTable: "Ozelliks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Ozellik_Person_AdminID",
+                        column: x => x.AdminID,
+                        principalTable: "Person",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArabaFirmas_AdresId",
-                table: "ArabaFirmas",
-                column: "AdresId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ArabaKiras_ArabaId",
-                table: "ArabaKiras",
+                name: "IX_ArabaKira_ArabaId",
+                table: "ArabaKira",
                 column: "ArabaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ArabaKiras_KiraciId",
-                table: "ArabaKiras",
-                column: "KiraciId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Arabas_ArabaFirId",
-                table: "Arabas",
-                column: "ArabaFirId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Arabas_ServisId",
-                table: "Arabas",
-                column: "ServisId");
+                name: "IX_ArabaKira_UserID",
+                table: "ArabaKira",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -435,30 +360,40 @@ namespace MyProject_web_programlama.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fotografs_ArabaId",
-                table: "Fotografs",
+                name: "IX_Fotograf_ArabaId",
+                table: "Fotograf",
                 column: "ArabaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_IlanKoys_ArabaId",
-                table: "IlanKoys",
+                name: "IX_IlanKoy_AdminID",
+                table: "IlanKoy",
+                column: "AdminID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IlanKoy_ArabaId",
+                table: "IlanKoy",
                 column: "ArabaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OzellikEkles_ArabaId",
-                table: "OzellikEkles",
-                column: "ArabaId");
+                name: "IX_Ozellik_AdminID",
+                table: "Ozellik",
+                column: "AdminID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OzellikEkles_OzellikId",
-                table: "OzellikEkles",
-                column: "OzellikId");
+                name: "IX_Person_OfisId",
+                table: "Person",
+                column: "OfisId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_ArabaId",
+                table: "Person",
+                column: "ArabaId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ArabaKiras");
+                name: "ArabaKira");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -476,19 +411,13 @@ namespace MyProject_web_programlama.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Fotografs");
+                name: "Fotograf");
 
             migrationBuilder.DropTable(
-                name: "IlanKoys");
+                name: "IlanKoy");
 
             migrationBuilder.DropTable(
-                name: "Ofis");
-
-            migrationBuilder.DropTable(
-                name: "OzellikEkles");
-
-            migrationBuilder.DropTable(
-                name: "Kiracis");
+                name: "Ozellik");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -497,19 +426,13 @@ namespace MyProject_web_programlama.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Arabas");
+                name: "Person");
 
             migrationBuilder.DropTable(
-                name: "Ozelliks");
+                name: "Ofis");
 
             migrationBuilder.DropTable(
-                name: "ArabaFirmas");
-
-            migrationBuilder.DropTable(
-                name: "ServisFirmas");
-
-            migrationBuilder.DropTable(
-                name: "Adres");
+                name: "Araba");
         }
     }
 }

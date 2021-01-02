@@ -19,7 +19,7 @@ namespace MyProject_web_programlama.Models
 
         [Range(2300, 50000, ErrorMessage = "{0} minimum 2300 TL , maksimum 50000 TL girebilirsiniz")]
         public double? Maas { get; set; }
-
+            
         public Medeni Medeni { get; set; }
 
         public Cinsiyet Cinsiyet { get; set; }

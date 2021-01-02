@@ -12,30 +12,34 @@ namespace MyProject_web_programlama.Models
         public int ID { get; set; }
 
         [Required]
+        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
+        [Column("FirstName")]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Required]
         [StringLength(50)]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [EmailAddress(ErrorMessage = "Geçersiz email adresi")]
-        public string Email1 { get; set; }
         [RegularExpression(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
                          @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
                          @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$",
                          ErrorMessage = "Email adresi geçersiz!")]
-        public string Email2 { get; set; }
+        public string Email { get; set; }
 
-        [Required]
-        [StringLength(50, ErrorMessage = "First name cannot be longer than 50 characters.")]
-        [Column("FirstName")]
-        [Display(Name = "First Name")]
-        public string FirstMidName { get; set; }
+
+
+        public Araba Araba { get; set; }
+
+
 
         [Display(Name = "Full Name")]
         public string FullName
         {
             get
             {
-                return LastName + ", " + FirstMidName;
+                return LastName + " " + FirstName;
             }
         }
     }

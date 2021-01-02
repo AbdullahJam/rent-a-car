@@ -5,8 +5,12 @@ using System.Collections.Generic;
 
 namespace MyProject_web_programlama.Models
 {
-    public partial class Ofi
+    public partial class Ofis
     {
         public int Id { get; set; }
+
+        public string OfisAd { get; set; }
+        // Adres
+
     }
 }
