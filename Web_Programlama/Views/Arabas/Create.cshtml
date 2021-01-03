@@ -1,0 +1,63 @@
+﻿@model Web_Programlama.Models.Araba
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Araba</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ArabaAd" class="control-label"></label>
+                <input asp-for="ArabaAd" class="form-control" />
+                <span asp-validation-for="ArabaAd" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KategoriId" class="control-label"></label>
+                <select asp-for="KategoriId" class ="form-control" asp-items="ViewBag.KategoriId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotografId" class="control-label"></label>
+                @*<input asp-for="FotografId" class="form-control" />*@
+                <input type="file" class="form-control" name="files" />
+                <span asp-validation-for="FotografId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="YilModulu" class="control-label"></label>
+                <input asp-for="YilModulu" class="form-control" />
+                <span asp-validation-for="YilModulu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UretilenFirma" class="control-label"></label>
+                <input asp-for="UretilenFirma" class="form-control" />
+                <span asp-validation-for="UretilenFirma" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vites" class="control-label"></label>
+                <select asp-for="Vites" asp-items="Html.GetEnumSelectList<Vites>()" class="form-control"></select>
+                <span asp-validation-for="Vites" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Yikit" class="control-label"></label>
+                <input asp-for="Yikit" class="form-control" />
+                <span asp-validation-for="Yikit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
